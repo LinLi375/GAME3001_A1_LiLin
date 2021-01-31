@@ -41,6 +41,9 @@ private:
 	float m_turnRate;
 	float m_accelerationRate;
 
+	float m_tValue;
+	bool m_slowDown;
+
 	// private function
 	void m_Move();
 };

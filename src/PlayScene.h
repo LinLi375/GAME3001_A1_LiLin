@@ -8,6 +8,7 @@
 #include "Obstacle.h"
 #include "SpaceShip.h"
 #include "Target.h"
+#include "SoundManager.h"
 
 class PlayScene : public Scene
 {
@@ -34,7 +35,10 @@ private:
 	Obstacle* m_pObstacle;
 	
 	// UI Items
-	
+	Label* m_pPlayLabel{};
+	Label* m_pPlayLabe2{};
+	Label* m_pPlayLabe3{};
+	Label* m_pPlayLabe4{};
 };
 
 #endif /* defined (__PLAY_SCENE__) */

@@ -1,12 +1,14 @@
 #include "PlayScene.h"
 #include "Game.h"
 #include "EventManager.h"
+#include "SoundManager.h"
 
 // required for IMGUI
 #include "imgui.h"
 #include "imgui_sdl.h"
 #include "Renderer.h"
 #include "Util.h"
+#include "Label.h"
 
 PlayScene::PlayScene()
 {
@@ -16,7 +18,7 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 = default;
 
-void PlayScene::draw()
+void PlayScene::draw() //
 {
 	if(EventManager::Instance().isIMGUIActive())
 	{
@@ -61,6 +63,10 @@ void PlayScene::handleEvents()
 
 void PlayScene::start()
 {
+	SoundManager::Instance().load("../Assets/audio/ZeroGravity.mp3", "ZeroGravity", SOUND_MUSIC);
+	SoundManager::Instance().playMusic("ZeroGravity", 1, 0);
+	SoundManager::Instance().setMusicVolume(23);
+	
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
@@ -78,6 +84,24 @@ void PlayScene::start()
 	m_pSpaceShip->setEnabled(false);
 	m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
 	addChild(m_pSpaceShip);
+
+	const SDL_Color green = { 60, 179, 113, 255 };
+	m_pPlayLabel = new Label("Press 1 for Seeking", "Consolas", 23, green, glm::vec2(150.0f, 30.0f));
+	m_pPlayLabel->setParent(this);
+	addChild(m_pPlayLabel);
+
+	m_pPlayLabe2 = new Label("Press 2 for Fleeing", "Consolas", 23, green, glm::vec2(150.0f, 60.0f));
+	m_pPlayLabe2->setParent(this);
+	addChild(m_pPlayLabe2);
+
+	m_pPlayLabe3 = new Label("Press 3 for Arrival", "Consolas", 23, green, glm::vec2(150.0f, 90.0f));
+	m_pPlayLabe3->setParent(this);
+	addChild(m_pPlayLabe3);
+
+	m_pPlayLabe4 = new Label("Press 4 for Obstacle Avoidance", "Consolas", 23, green, glm::vec2(220.0f, 120.0f));
+	m_pPlayLabe4->setParent(this);
+	addChild(m_pPlayLabe4);
+	
 }
 
 void PlayScene::GUI_Function() const

@@ -1,5 +1,5 @@
 #include "SpaceShip.h"
-
+#include "SoundManager.h"
 
 #include "Game.h"
 #include "Util.h"
@@ -33,6 +33,8 @@ void SpaceShip::draw()
 		getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
 
 	Util::DrawLine(getTransform()->position, (getTransform()->position + getOrientation() * 160.0f) );
+
+
 }
 
 void SpaceShip::update()
@@ -105,11 +107,44 @@ float SpaceShip::getRotation() const
 
 void SpaceShip::m_Move()
 {
+	//auto deltaTime = TheGame::Instance()->getDeltaTime();
+
+	//// direction with magnitude
+	//m_targetDirection = m_destination - getTransform()->position;
+	//
+	//// normalized direction
+	//m_targetDirection = Util::normalize(m_targetDirection);
+
+	//auto target_rotation = Util::signedAngle(getOrientation(), m_targetDirection);
+
+	//auto turn_sensitivity = 5.0f;
+
+	//if(abs(target_rotation) > turn_sensitivity)
+	//{
+	//	if (target_rotation > 0.0f)
+	//	{
+	//		setRotation(getRotation() + getTurnRate());
+	//	}
+	//	else if (target_rotation < 0.0f)
+	//	{
+	//		setRotation(getRotation() - getTurnRate());
+	//	}
+	//}
+
+	//getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
+
+	//// using the formula pf = pi + vi*t + 0.5ai*t^2
+	//getRigidBody()->velocity += getOrientation() * (deltaTime) + 0.5f * getRigidBody()->acceleration * (deltaTime);
+	//getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	//getTransform()->position += getRigidBody()->velocity;
+
+
+
 	auto deltaTime = TheGame::Instance()->getDeltaTime();
 
 	// direction with magnitude
 	m_targetDirection = m_destination - getTransform()->position;
-	
+
 	// normalized direction
 	m_targetDirection = Util::normalize(m_targetDirection);
 
@@ -117,7 +152,7 @@ void SpaceShip::m_Move()
 
 	auto turn_sensitivity = 5.0f;
 
-	if(abs(target_rotation) > turn_sensitivity)
+	if (abs(target_rotation) > turn_sensitivity)
 	{
 		if (target_rotation > 0.0f)
 		{
@@ -132,8 +167,7 @@ void SpaceShip::m_Move()
 	getRigidBody()->acceleration = getOrientation() * getAccelerationRate();
 
 	// using the formula pf = pi + vi*t + 0.5ai*t^2
-	getRigidBody()->velocity += getOrientation() * (deltaTime) +
-		0.5f * getRigidBody()->acceleration * (deltaTime);
-
+	getRigidBody()->velocity += getOrientation() * (deltaTime)+0.5f * getRigidBody()->acceleration * (deltaTime);
+	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
 	getTransform()->position += getRigidBody()->velocity;
 }
